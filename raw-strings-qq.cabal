@@ -1,0 +1,32 @@
+name:                raw-strings-qq
+version:             1.0
+synopsis:            Raw string literals for Haskell.
+description:
+
+    A quasiquoter for raw string literals - that is, string literals that don't
+    recognise the standard escape sequences (such as '\n'). Basically, they make
+    your code more readable by freeing you from the responsibility to escape
+    backslashes. They are useful when working with regular expressions,
+    DOS/Windows paths and markup languages (such as XML).
+    .
+    See @examples/RawRegex.hs@ for a usage example.
+
+homepage:            https://github.com/23Skidoo/raw-strings-qq
+bug-reports:         https://github.com/23Skidoo/raw-strings-qq/issues
+license:             BSD3
+license-file:        LICENSE
+author:              Mikhail Glushenkov
+maintainer:          mikhail.glushenkov@gmail.com
+copyright:           (c) Mikhail Glushenkov 2013
+category:            Text
+build-type:          Simple
+cabal-version:       >=1.8
+extra-source-files:  examples/RawRegex.hs
+
+source-repository head
+  type:     git
+  location: https://github.com/23Skidoo/raw-strings-qq.git
+
+library
+  exposed-modules:     Text.RawString.QQ
+  build-depends:       base, template-haskell >= 2.5
