@@ -1,6 +1,6 @@
 -- | Raw string literals, implemented using Template Haskell's quasiquotation
 -- feature.
-module Text.RawString.QQ
+module Text.RawString.QQ (r, rQ)
        where
 
 import Language.Haskell.TH
@@ -67,18 +67,23 @@ r = QuasiQuoter {
                            \(allowed as expression only, used as a declaration)"
 }
 
-{-| A variant of 'r' that interprets the @\"|~]\"@ sequence as @\"|]\"@.
+{-| A variant of 'r' that interprets the @\"|~]\"@ sequence as @\"|]\"@,
+@\"|~~]\"@ as @\"|~]\"@ and, in general, @\"|~^n]\"@ as @\"|~^(n-1)]\"@.
 
 Usage:
 
 @
     ghci> [rQ||~]|~]|]
     \"|]|]\"
+    ghci> [rQ||~~]|]
+    \"|~]\"
+    ghci> [rQ||~~~~]|]
+    \"|~~~]\"
 @
 -}
 rQ :: QuasiQuoter
 rQ = QuasiQuoter {
-    quoteExp  = return . LitE . StringL . escape,
+    quoteExp  = return . LitE . StringL . escape_rQ,
 
     quotePat  = \_ -> fail "illegal raw string QuasiQuote \
                            \(allowed as expression only, used as a pattern)",
@@ -87,8 +92,13 @@ rQ = QuasiQuoter {
     quoteDec  = \_ -> fail "illegal raw string QuasiQuote \
                            \(allowed as expression only, used as a declaration)"
 }
-  where
-    escape :: String -> String
-    escape []               = []
-    escape ('|':'~':']':xs) = '|':']':escape xs
-    escape (x:xs)           = x : escape xs
+
+escape_rQ :: String -> String
+escape_rQ [] = []
+escape_rQ ('|':'~':xs) =
+  let (tildas, rest) = span (== '~') xs
+  in case rest of
+    []       -> '|':'~':tildas
+    (']':rs) -> '|':tildas ++ ']':escape_rQ rs
+    rs       -> '|':'~':tildas ++ escape_rQ rs
+escape_rQ (x:xs) = x : escape_rQ xs
