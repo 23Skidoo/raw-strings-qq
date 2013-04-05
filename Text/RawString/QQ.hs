@@ -68,7 +68,8 @@ r = QuasiQuoter {
 }
 
 {-| A variant of 'r' that interprets the @\"|~]\"@ sequence as @\"|]\"@,
-@\"|~~]\"@ as @\"|~]\"@ and, in general, @\"|~^n]\"@ as @\"|~^(n-1)]\"@.
+@\"|~~]\"@ as @\"|~]\"@ and, in general, @\"|~^n]\"@ as @\"|~^(n-1)]\"@
+for n >= 1.
 
 Usage:
 
