@@ -30,3 +30,12 @@ source-repository head
 library
   exposed-modules:     Text.RawString.QQ
   build-depends:       base <= 10, template-haskell >= 2.5
+
+test-suite tests
+  hs-source-dirs: test
+  main-is:        Test.hs
+  type:           exitcode-stdio-1.0
+  build-depends:  base,
+                  raw-strings-qq,
+                  HUnit
+  ghc-options:    -Wall
