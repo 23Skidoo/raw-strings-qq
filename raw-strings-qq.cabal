@@ -1,5 +1,5 @@
 name:                raw-strings-qq
-version:             1.0.3
+version:             1.1
 synopsis:            Raw string literals for Haskell.
 description:
 
@@ -17,11 +17,12 @@ license:             BSD3
 license-file:        LICENSE
 author:              Mikhail Glushenkov
 maintainer:          mikhail.glushenkov@gmail.com
-copyright:           (c) Mikhail Glushenkov 2013
+copyright:           (c) Mikhail Glushenkov 2013-2015
 category:            Text
 build-type:          Simple
 cabal-version:       >=1.8
 extra-source-files:  examples/RawRegex.hs
+                     ChangeLog
 
 source-repository head
   type:     git

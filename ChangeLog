@@ -1,0 +1,7 @@
+-*-change-log-*-
+
+1.1 Mikhail Glushenkov <mikhail.glushenkov@gmail.com>
+	* CRLF line endings are now normalised to LF (#1).
+
+1.0 Mikhail Glushenkov <mikhail.glushenkov@gmail.com>
+	* Initial release.
