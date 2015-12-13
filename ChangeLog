@@ -3,5 +3,11 @@
 1.1 Mikhail Glushenkov <mikhail.glushenkov@gmail.com>
 	* CRLF line endings are now normalised to LF (#1).
 
+1.0.2 Mikhail Glushenkov <mikhail.glushenkov@gmail.com>
+	* Added an ability to escape '|~...]' sequences.
+
+1.0.1 Mikhail Glushenkov <mikhail.glushenkov@gmail.com>
+	* Tweaked documentation.
+
 1.0 Mikhail Glushenkov <mikhail.glushenkov@gmail.com>
 	* Initial release.
