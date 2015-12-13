@@ -57,7 +57,7 @@ For more on quasiquotation, see
 r :: QuasiQuoter
 r = QuasiQuoter {
     -- Extracted from dead-simple-json.
-    quoteExp  = return . LitE . StringL,
+    quoteExp  = return . LitE . StringL . normaliseNewlines,
 
     quotePat  = \_ -> fail "illegal raw string QuasiQuote \
                            \(allowed as expression only, used as a pattern)",
@@ -84,7 +84,7 @@ Usage:
 -}
 rQ :: QuasiQuoter
 rQ = QuasiQuoter {
-    quoteExp  = return . LitE . StringL . escape_rQ,
+    quoteExp  = return . LitE . StringL . escape_rQ . normaliseNewlines,
 
     quotePat  = \_ -> fail "illegal raw string QuasiQuote \
                            \(allowed as expression only, used as a pattern)",
@@ -103,3 +103,10 @@ escape_rQ ('|':'~':xs) =
     (']':rs) -> '|':tildas ++ ']':escape_rQ rs
     rs       -> '|':'~':tildas ++ escape_rQ rs
 escape_rQ (x:xs) = x : escape_rQ xs
+
+-- See https://github.com/23Skidoo/raw-strings-qq/issues/1 and
+-- https://ghc.haskell.org/trac/ghc/ticket/11215.
+normaliseNewlines :: String -> String
+normaliseNewlines []             = []
+normaliseNewlines ('\r':'\n':cs) = '\n':normaliseNewlines cs
+normaliseNewlines (c:cs)         = c:normaliseNewlines cs
